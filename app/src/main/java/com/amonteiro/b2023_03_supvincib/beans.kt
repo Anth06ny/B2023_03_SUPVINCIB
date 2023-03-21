@@ -17,11 +17,7 @@ fun main() {
 //    PrintRandomIntBean()
 
     val plane = PlaneBean("toto")
-    println("${plane.name} :  ${plane.id}")
-    plane.name = "tata"
-    println("${plane.name} :  ${plane.id}")
-    plane.name = "toto"
-    println("${plane.name} :  ${plane.id}")
+    val plane2 = PlaneBean("toto")
 
 }
 
