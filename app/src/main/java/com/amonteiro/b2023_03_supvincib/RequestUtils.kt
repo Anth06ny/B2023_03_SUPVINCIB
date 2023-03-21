@@ -1,13 +1,23 @@
 package com.amonteiro.b2023_03_supvincib
 
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
 //Utilisation
 
+const val API_WEATHER = "https://api.openweathermap.org/data/2.5/weather?q=##1&appid=b80967f0a6bd10d23e44848547b26550&units=metric&lang=fr"
 
 object RequestUtils {
+
     val client = OkHttpClient()
+    val gson = Gson()
+
+    fun loadWeather(cityName: String): WeatherBean {
+        val json = sendGet(API_WEATHER.replace("##1", cityName))
+        val data: WeatherBean = gson.fromJson(json, WeatherBean::class.java)
+        return data
+    }
 
     //Méthode qui prend en entrée une url, execute la requête
     //Retourne le code HTML/JSON reçu

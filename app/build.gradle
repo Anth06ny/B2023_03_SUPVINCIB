@@ -36,6 +36,8 @@ dependencies {
 
     //Requête Web
     implementation 'com.squareup.okhttp3:okhttp:+'
+    //GSON Parsing JSON
+    implementation 'com.google.code.gson:gson:2.3'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
