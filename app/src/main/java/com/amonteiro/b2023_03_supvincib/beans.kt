@@ -16,19 +16,33 @@ fun main() {
 //
 //    PrintRandomIntBean()
 
-    val plane = PlaneBean("toto")
-    val plane2 = PlaneBean("toto")
 
 }
 
+class RandomName() {
+    private val list = arrayListOf("A", "B", "C")
+    private var oldValue = ""
+
+    fun add(name: String?) = if (!name.isNullOrBlank() && name !in list) list.add(name) else false
+
+    fun next() = list.random()
+
+    fun nextDiff(): String {
+        oldValue = list.filter { it != oldValue }.random()
+        return oldValue
+    }
+
+    fun next2() = Pair(nextDiff(), nextDiff())
+}
+
 //API WEATHER
-data class WeatherBean(var main : TempBean, var wind:WindBean, var name:String, var toto:String)
-data class TempBean(var temp : Double)
-data class WindBean(var speed : Double)
+data class WeatherBean(var main: TempBean, var wind: WindBean, var name: String, var toto: String)
+data class TempBean(var temp: Double)
+data class WindBean(var speed: Double)
 
 //EXO
 
-class PlaneBean(name:String){
+class PlaneBean(name: String) {
     var id = name.hashCode()
         private set
 
@@ -40,14 +54,15 @@ class PlaneBean(name:String){
 }
 
 
-data class UserBean(val name:String, var note: Int = 0){
-    val id = name.hashCode()
-}
-data class TotoBean(val name:String, var note: Int = 0){
+data class UserBean(val name: String, var note: Int = 0) {
     val id = name.hashCode()
 }
 
-class PrintRandomIntBean(val max :Int){
+data class TotoBean(val name: String, var note: Int = 0) {
+    val id = name.hashCode()
+}
+
+class PrintRandomIntBean(val max: Int) {
     private val random = Random()
 
     init {
@@ -63,10 +78,10 @@ class PrintRandomIntBean(val max :Int){
     }
 }
 
-data class StudentBean(val name:String) {
+data class StudentBean(val name: String) {
     var note = 0
 }
 
-data class CarBean(var marque:String, var model:String) {
-    var color : String? = null
+data class CarBean(var marque: String, var model: String) {
+    var color: String? = null
 }
