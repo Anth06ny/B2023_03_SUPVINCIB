@@ -36,12 +36,13 @@
             android:text="Complément"/>
 
         <EditText
+            android:id="@+id/et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="Saisir nom ici"
-            android:minHeight="48dp"/>
+            android:minHeight="48dp" />
     </LinearLayout>
 
     <ImageView
@@ -56,17 +57,19 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="Annuler"/>
+            android:text="Annuler" />
 
         <Button
+            android:id="@+id/btValidate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="Valider"/>
+            android:text="Valider" />
     </LinearLayout>
 </LinearLayout>
