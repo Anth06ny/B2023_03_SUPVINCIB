@@ -17,13 +17,33 @@ class MainActivity : AppCompatActivity() {
         //Affiche une IHM
         setContentView(binding.root)
 
+        println("coucou")
+        var i = 0
+        println(18/i)
+
+        //Clic sur le bouton valider
         binding.btValidate.setOnClickListener {
-            binding.et.setText("Clic sur valider")
+            if(binding.rbLike.isChecked) {
+                binding.et.setText(binding.rbLike.text)
+            }
+            else if(binding.rbDislike.isChecked) {
+                binding.et.setText(binding.rbDislike.text)
+            }
+            else {
+                binding.et.setText("")
+            }
+
+            binding.iv.setImageResource(R.drawable.baseline_delete_forever_24)
+            binding.iv.setColorFilter(getColor(R.color.purple_500))
         }
 
         binding.btCancel.setOnClickListener {
-            binding.et.setText("Clic sur annuler")
+            binding.et.setText("")
+            //décoche tous les radiobutton
+            binding.rg.clearCheck()
+            binding.iv.setImageResource(R.drawable.baseline_flag_24)
         }
-
     }
+
+
 }
