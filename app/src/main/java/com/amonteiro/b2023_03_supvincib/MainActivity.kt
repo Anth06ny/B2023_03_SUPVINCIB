@@ -1,6 +1,9 @@
 package com.amonteiro.b2023_03_supvincib
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.amonteiro.b2023_03_supvincib.databinding.ActivityMainBinding
 
@@ -16,10 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //Affiche une IHM
         setContentView(binding.root)
-
-        println("coucou")
-        var i = 0
-        println(18/i)
 
         //Clic sur le bouton valider
         binding.btValidate.setOnClickListener {
@@ -45,5 +44,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Callback de la création du menu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        menu.add(0,5,0,"Météo")
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if(item.itemId == 5) {
+            //Action faire
+            val intent = Intent(this, WeatherActivity::class.java)
+            //Lancer l'action à faire
+            startActivity(intent)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
 }
