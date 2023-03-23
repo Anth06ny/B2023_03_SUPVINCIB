@@ -6,7 +6,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.amonteiro.b2023_03_supvincib.databinding.ActivityWeatherBinding
 import com.squareup.picasso.Picasso
-import kotlin.concurrent.thread
 
 class WeatherActivity : AppCompatActivity() {
 
@@ -20,55 +19,49 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        observe()
+
         //Clic sur le bouton
         binding.btLoad.setOnClickListener {
+            model.loadData(binding.etCityName.text.toString())
+        }
+    }
 
-            //etCityName c'est un composant graphique on récupère avant le thread
-            val cityName = binding.etCityName.text.toString()
-            binding.progressBar.isVisible = true
+    fun observe() {
 
-            //Lancement d'une tâche asynchrone (thread separé)
-            thread {
-                model.loadData(cityName)
-                //Permet de revenir sur le thread Principale
-                runOnUiThread {
-                    refreshScreen()
-                    binding.progressBar.isVisible = false
-                }
+        model.runInProgress.observe(this){
+            binding.progressBar.isVisible = it
+        }
+
+        //on observe la donnée et cela déclanche l'observer quand ca change et à la subscription
+        model.errorMessage.observe(this) {
+            //CAS ERREUR
+            if (it.isNotBlank()) {
+                binding.tvError.isVisible = true
+                binding.tvError.setText(it)
             }
-
+            else {
+                binding.progressBar.isVisible = false
+            }
         }
 
-        refreshScreen()
+        model.data.observe(this) {
+            //CAS QUI MARCHE
+            //Mise à jour des composants graphiques avec mes données
+            binding.tv.text = it?.name ?: "-"
+            binding.tvWind.text = it?.wind?.speed?.toString() ?: "-"
+            binding.tvTemp.text = "${it?.main?.temp ?: "-"} °"
+            binding.tvMinMax.text = "(${it?.main?.temp_min ?: "-"}°/${it?.main?.temp_max ?: "-"}°)"
+
+            if (it?.weather?.isNotEmpty() == true) {
+                binding.tvDesc.text = it?.weather?.get(0)?.description ?: "-"
+                Picasso.get().load("https://openweathermap.org/img/wn/${it?.weather?.get(0)?.icon}@4x.png").into(binding.ivTemp)
+            }
+            else {
+                binding.tvDesc.text = "-"
+                binding.ivTemp.setImageBitmap(null)
+            }
+        }
     }
 
-    fun refreshScreen() {
-        //CAS QUI MARCHE
-        //Mise à jour des composants graphiques avec mes données
-        binding.tv.setText(model.data?.name ?: "-")
-        binding.tvWind.setText(model.data?.wind?.speed?.toString() ?: "-")
-        binding.tvTemp.setText("${model.data?.main?.temp ?: "-"} °")
-        binding.tvMinMax.text = "(${model?.data?.main?.temp_min ?: "-"}°/${model.data?.main?.temp_max ?: "-"}°)"
-
-        if (model.data?.weather?.isNotEmpty() == true) {
-            binding.tvDesc.setText(model?.data?.weather?.get(0)?.description ?: "-")
-            Picasso.get().load("https://openweathermap.org/img/wn/${model?.data?.weather?.get(0)?.icon}@4x.png").into(binding.ivTemp)
-        }
-        else {
-            binding.tvDesc.setText("-")
-            binding.ivTemp.setImageBitmap(null)
-        }
-
-
-        //CAS ERREUR
-        if (model.errorMessage.isNotBlank()) {
-            binding.tvError.isVisible = true
-            binding.tvError.setText(model.errorMessage)
-        }
-        else {
-            binding.progressBar.isVisible = false
-        }
-
-
-    }
 }

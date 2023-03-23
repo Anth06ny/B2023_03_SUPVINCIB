@@ -15,6 +15,7 @@ object RequestUtils {
 
     fun loadWeather(cityName: String): WeatherBean {
         val json = sendGet(API_WEATHER.replace("##1", cityName))
+        Thread.sleep(5000)
         val data: WeatherBean = gson.fromJson(json, WeatherBean::class.java)
         return data
     }
