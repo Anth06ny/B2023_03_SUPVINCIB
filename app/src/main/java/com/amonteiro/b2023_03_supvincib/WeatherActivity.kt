@@ -22,6 +22,7 @@ class WeatherActivity : AppCompatActivity() {
             //etCityName c'est un composant graphique on récupère avant le thread
             val cityName = binding.etCityName.text.toString()
             binding.progressBar.isVisible = true
+            binding.tvError.isVisible = false
 
             //Lancement d'une tâche asynchrone (thread separé)
 
@@ -51,6 +52,8 @@ class WeatherActivity : AppCompatActivity() {
                     e.printStackTrace()
                     runOnUiThread {
                         binding.progressBar.isVisible = false
+                        binding.tvError.setText(e.message)
+                        binding.tvError.isVisible = true
                     }
                 }
             }
