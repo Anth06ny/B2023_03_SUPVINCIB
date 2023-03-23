@@ -36,9 +36,11 @@ class RandomName() {
 }
 
 //API WEATHER
-data class WeatherBean(var main: TempBean, var wind: WindBean, var name: String, var toto: String)
-data class TempBean(var temp: Double)
+data class WeatherBean(var main: TempBean, var wind: WindBean, var name: String, var weather: List<DescriptionBean>)
+data class TempBean(var temp: Double, var temp_max: Double,
+                    var temp_min: Double)
 data class WindBean(var speed: Double)
+data class DescriptionBean(var description: String,var icon:String)
 
 //EXO
 
