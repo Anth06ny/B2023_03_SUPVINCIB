@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         menu.add(0,5,0,"Météo")
         menu.add(0,6,0,"DemoRapidAPI")
+        menu.add(0,7,0,"Maps")
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -65,6 +66,12 @@ class MainActivity : AppCompatActivity() {
         if(item.itemId == 6) {
             //Action faire
             val intent = Intent(this, PlaneteInfoActivity::class.java)
+            //Lancer l'action à faire
+            startActivity(intent)
+        }
+ if(item.itemId == 7) {
+            //Action faire
+            val intent = Intent(this, MapsActivity::class.java)
             //Lancer l'action à faire
             startActivity(intent)
         }

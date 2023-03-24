@@ -18,6 +18,27 @@ object RequestUtils {
     val client = OkHttpClient()
     val gson = Gson()
 
+    fun planetsInfo(planeteName: String): List<PlaneteBean> {
+        val request = Request.Builder()
+            .url("https://planets-by-api-ninjas.p.rapidapi.com/v1/planets?name=$planeteName")
+            .get()
+            .addHeader("X-RapidAPI-Key", "93329c7cf9msha136bd696cd1040p10a1dejsnbc52cdb0746e")
+            .addHeader("X-RapidAPI-Host", "planets-by-api-ninjas.p.rapidapi.com")
+            .build()
+
+        client.newCall(request).execute().use { //it:Response
+            //use permet de fermer la réponse qu'il y ait ou non une exception
+            //Analyse du code retour
+            if (!it.isSuccessful) {
+                throw Exception("Réponse du serveur incorrect :${it.code}")
+            }
+            //Résultat de la requête
+            val json = it.body.string()
+            val data = gson.fromJson(json, Array<PlaneteBean>::class.java)
+            return data.toList()
+        }
+    }
+
     fun planetInfo(planeteName: String): PlaneteBean? {
         val request = Request.Builder()
             .url("https://planets-by-api-ninjas.p.rapidapi.com/v1/planets?name=$planeteName")

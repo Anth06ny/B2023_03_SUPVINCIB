@@ -7,6 +7,7 @@ import kotlin.concurrent.thread
 class PlaneteInfoViewModel : ViewModel() {
 
     var data = MutableLiveData<PlaneteBean?>(null)
+    var allData = MutableLiveData<List<PlaneteBean>>(ArrayList())
     var errorMessage = MutableLiveData("")
     var runInProgress = MutableLiveData(false)
 
@@ -26,6 +27,31 @@ class PlaneteInfoViewModel : ViewModel() {
 
                 //Requête en dehors de l'UIThread
                 data.postValue(RequestUtils.planetInfo(planeteName))
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+                errorMessage.postValue(e.message ?: "Une erreur est survenue")
+            }
+            runInProgress.postValue(false)
+        }
+    }
+
+    fun loadAllData(planeteName: String) {
+        //PostValue : Met à jour la donnée et déclanche l'observer sur l'UIThread
+        allData.postValue(ArrayList())
+        errorMessage.postValue("")
+        runInProgress.postValue(true)
+
+        //Lancement d'une tâche asynchrone (thread separé)
+        thread {
+            try {
+                //Controle
+                if(planeteName.trim().length < 2) {
+                    throw Exception("Il faut au moins 2 caractères")
+                }
+
+                //Requête en dehors de l'UIThread
+                allData.postValue(RequestUtils.planetsInfo(planeteName))
             }
             catch (e: Exception) {
                 e.printStackTrace()

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.amonteiro.b2023_03_supvincib.databinding.ActivityPlaneteInfoBinding
 
 class PlaneteInfoActivity : AppCompatActivity() {
@@ -14,12 +15,21 @@ class PlaneteInfoActivity : AppCompatActivity() {
     //C'est le framework qui se charge de la création ou récupération
     val model by lazy { ViewModelProvider(this).get(PlaneteInfoViewModel::class.java) }
 
+    val adapter = PlaneteAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        //Reglage recyclerView
+        binding.rv.adapter = adapter
+        binding.rv.layoutManager = GridLayoutManager(this, 1)
 
-        binding.button.setOnClickListener {
+        binding.btFirst.setOnClickListener {
             model.loadData(binding.et.text.toString())
+        }
+
+        binding.btAll.setOnClickListener {
+            model.loadAllData(binding.et.text.toString())
         }
 
         observe()
@@ -53,6 +63,10 @@ class PlaneteInfoActivity : AppCompatActivity() {
                 binding.tvResponse.setText("-")
             }
 
+        }
+
+        model.allData.observe(this) {
+            adapter.submitList(it)
         }
     }
 

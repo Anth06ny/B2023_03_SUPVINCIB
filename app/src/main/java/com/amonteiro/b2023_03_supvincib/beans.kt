@@ -37,15 +37,11 @@ class RandomName() {
 
 //API Planet
 data class PlaneteBean(
-    var distance_light_year: Double,
-    var host_star_mass: Int,
-    var host_star_temperature: Int,
     var mass: Double,
     var name: String,
-    var period: Int,
+    var period: Double,
     var radius: Double,
-    var semi_major_axis: Double,
-    var temperature: Int
+    var temperature: Double?
 )
 
 
