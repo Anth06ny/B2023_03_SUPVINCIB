@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menu.add(0,5,0,"Météo")
+        menu.add(0,6,0,"DemoRapidAPI")
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -57,6 +58,13 @@ class MainActivity : AppCompatActivity() {
         if(item.itemId == 5) {
             //Action faire
             val intent = Intent(this, WeatherActivity::class.java)
+            //Lancer l'action à faire
+            startActivity(intent)
+        }
+
+        if(item.itemId == 6) {
+            //Action faire
+            val intent = Intent(this, PlaneteInfoActivity::class.java)
             //Lancer l'action à faire
             startActivity(intent)
         }

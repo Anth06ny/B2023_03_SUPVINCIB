@@ -35,6 +35,20 @@ class RandomName() {
     fun next2() = Pair(nextDiff(), nextDiff())
 }
 
+//API Planet
+data class PlaneteBean(
+    var distance_light_year: Double,
+    var host_star_mass: Int,
+    var host_star_temperature: Int,
+    var mass: Double,
+    var name: String,
+    var period: Int,
+    var radius: Double,
+    var semi_major_axis: Double,
+    var temperature: Int
+)
+
+
 //API WEATHER
 data class WeatherBean(var main: TempBean, var wind: WindBean, var name: String, var weather: List<DescriptionBean>)
 data class TempBean(var temp: Double, var temp_max: Double,
